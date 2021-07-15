@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Personal blog, thinking and sharing of technology and life">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    (2016.11-2016.12）推动JC全站-规划灰度环境发布系统方案实施 |
+    
+    Yancy</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Project/1.推动JC全站-规划灰度环境发布系统方案实施" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      (2016.11-2016.12）推动JC全站-规划灰度环境发布系统方案实施
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/12/12/Project/1.%E6%8E%A8%E5%8A%A8JC%E5%85%A8%E7%AB%99-%E8%A7%84%E5%88%92%E7%81%B0%E5%BA%A6%E7%8E%AF%E5%A2%83%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AE%9E%E6%96%BD/" class="article-date">
+  <time datetime="2020-12-11T22:18:06.000Z" itemprop="datePublished">2020-12-12</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p><img src="https://tech.youzan.com/content/images/2019/12/canary-spec.png" alt=""></p>
+<a id="more"></a>   
+
+
+
+<h4 id="√-所在公司：Jollychic"><a href="#√-所在公司：Jollychic" class="headerlink" title="√ 所在公司：Jollychic"></a>√ 所在公司：Jollychic</h4><h4 id="√-项目背景："><a href="#√-项目背景：" class="headerlink" title="√ 项目背景："></a>√ 项目背景：</h4><p>近几年，随着Jollychic用户的迅速增长和业务的快速发展，对业务开发人员要求越来越高，一方面要求为用户提供稳定的服务，一方面要求进行快速业务迭代。然而，随着公司业务复杂度和服务化整体规模的增长，单个业务功能涉及的微服务接口数、服务化调用链路长度都在迅速增加，业务的回归测试越来越难以覆盖到所有的调用链路和业务逻辑，通过仅在测试环境进行业务测试的方式来保证系统稳定性的难度越来越高。</p>
+<p>基于系统稳定性和快速业务迭代的综合考虑，业务应用开发团队采取了新版本服务灰度上线的方式，即新版本服务并非全量发布到线上环境，而是发布少数几个实例进行灰度验证，没有问题后再全量发布。在部分核心服务进行接口升级和逻辑迁移时，还会通过在业务逻辑代码中增加黑白名单或者流量百分比控制的方式，逐步将旧版本接口实现迁移至新版本接口实现。</p>
+<h4 id="√-项目参与人员："><a href="#√-项目参与人员：" class="headerlink" title="√ 项目参与人员："></a>√ 项目参与人员：</h4><p>所有项目逐步测试-分别：由我为主导负责人 （系统运维2人）</p>
+<h4 id="√-灰度实现思路方案："><a href="#√-灰度实现思路方案：" class="headerlink" title="√ 灰度实现思路方案："></a>√ 灰度实现思路方案：</h4><ol>
+<li>在代码中做。<br>一套线上环境，代码中做开关，对于不同的用户走不同的逻辑。</li>
+<li>在接入层做。<br>多套(隔离的)线上环境，接入层针对不同用户转发到不同的环境中</li>
+</ol>
+<p>两种方案的优缺点：<br>在代码中做<br>灵活，粒度细；一套代码(环境)运维成本低<br>灰度逻辑侵入代码<br>在接入层做<br>无需（少）侵入代码；风险小<br>多套线上环境，运维成本高<br>灵活的灰度方案一般需要在接入层实现，具体就是自定义负载均衡策略实现。</p>
+<p>我们灰度集群部署的规模为稳定集群的10%，即若稳定集群有100个实例，灰度集群部署10个实例。</p>
+<ol start="3">
+<li>制定灰度发布流程：</li>
+</ol>
+<p>灰度发布开始、灰度初始化、灰度验证、灰度取消或全量发布、灰度发布结束。<br>尽量做到Jenkins能和灰度发布开关，apollo配置中心开关协同。</p>
+<p><img src="https://tech.youzan.com/content/images/2019/12/canary_flow-1.png" alt=""></p>
+<h4 id="√-具体的实现步骤方式与流程："><a href="#√-具体的实现步骤方式与流程：" class="headerlink" title="√ 具体的实现步骤方式与流程："></a>√ 具体的实现步骤方式与流程：</h4><ol>
+<li>第一是在nginx层实现（使用ngx+lua）</li>
+<li>第二是在网关层实现（spring-cloud-zuul）。</li>
+<li>第三是dubbo的灰度，项目中如果使用dubbo，有可能会需要dubbo服务的灰度实现。</li>
+<li>载均衡又可分为服务端负载均衡和客户端负载均衡</li>
+</ol>
+<ul>
+<li><p>服务器端负载均衡：使用Nginx，通过Nginx进行负载均衡，先发送请求，然后通过负载均衡算法，在多个服务器之间选择一个进行访问；即在服务器端再进行负载均衡算法分配。</p>
+</li>
+<li><p>客户端负载均衡：使用dubbo，客户端会有一个服务器地址列表，在发送请求前通过负载均衡算法选择一个服务器，然后进行访问，这是客户端负载均衡；即在客户端就进行负载均衡算法分配，进行流量控制隔离。</p>
+</li>
+</ul>
+<ol>
+<li>灰度取消。如果在灰度验证过程中发现了问题，灰度取消可秒级将全部流量切回稳定集群，具体包括两个步骤：删除路由规则和灰度集群下线。当然，用户也可先通过修改规则的方式（如店铺列表置空或请求百分比置0），先将流量切回稳定集群，然后保留现场，方便进行问题排查。</li>
+<li>全量发布。如果灰度验证没有发现问题，那么就可以进行新版本的全量发布了。包括：稳定集群全量发布、删除灰度路由规则和灰度集群下线。</li>
+<li>灰度发布结束。</li>
+</ol>
+<h4 id="√-上线灰度环境的带来的优点："><a href="#√-上线灰度环境的带来的优点：" class="headerlink" title="√ 上线灰度环境的带来的优点："></a>√ 上线灰度环境的带来的优点：</h4><ol>
+<li>及早获得用户的意见反馈，完善产品功能，提升产品质量</li>
+<li>让用户参与产品测试，加强与用户互动</li>
+<li>降低产品升级所影响的用户范围</li>
+<li>规避一定的发布风险</li>
+<li>避免停服发布给用户带来不便</li>
+<li>具有容灾能力</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chengyangyang.com/2020/12/12/Project/1.%E6%8E%A8%E5%8A%A8JC%E5%85%A8%E7%AB%99-%E8%A7%84%E5%88%92%E7%81%B0%E5%BA%A6%E7%8E%AF%E5%A2%83%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AE%9E%E6%96%BD/" data-id="ckr4d2j7q00054e83hc5t6alc"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Project/" rel="tag">Project</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/01/11/Project/2.%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%96%BD-%E5%AE%8C%E5%96%84%E6%97%A5%E5%BF%97%E8%A7%84%E8%8C%83%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            (2017/03–2017/04）日志分析平台系统实施-完善日志规范化
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/11/17/Financing/90%E5%90%8E%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%AC%AC%E4%B8%80%E5%A5%97%E6%88%BF%EF%BC%8C%E6%80%8E%E4%B9%88%E4%B9%B0%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">90后年轻人第一套房，怎么买？</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: 'dc0b1bea783e8da99942',
+        clientSecret: '01fb9233aa2893fcc863b1437f4335d21402ae3f',
+        repo: 'chengyangyang.github.io',
+        owner: 'yangcvo',
+        admin: ['yangcvo'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 Yancy</li>
+      <li>Powered by <a href="http://blog.chengyangyang.com" target="_blank">Yancy</a></li>
+      <li>Work blog  <a href="https://weblog.chengyangyang.com" target="_blank" rel="noopener">weblog.chengyangyang.com</a></li>
+      <!--
+      <li><a href="/">Yancy</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Yancy"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/Project">Project</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2015/05/20/Pastime/Pastime/">Pastime</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="https://www.linkedin.com/in/%E6%B4%8B%E6%B4%8B-%E7%A8%8B-758332121/" target="_blank" rel="noopener">linkedin</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2014/03/21/Whoami/About/">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
