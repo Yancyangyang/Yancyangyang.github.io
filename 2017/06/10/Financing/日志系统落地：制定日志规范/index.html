@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Personal blog, thinking and sharing of technology and life">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    (2017/06–2017/08）日志分析平台系统落地：制定日志规范* |
+    
+    Yancy</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Financing/日志系统落地：制定日志规范" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      (2017/06–2017/08）日志分析平台系统落地：制定日志规范*
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/06/10/Financing/%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E8%90%BD%E5%9C%B0%EF%BC%9A%E5%88%B6%E5%AE%9A%E6%97%A5%E5%BF%97%E8%A7%84%E8%8C%83/" class="article-date">
+  <time datetime="2017-06-09T22:18:06.000Z" itemprop="datePublished">2017-06-10</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p><img src="https://user-gold-cdn.xitu.io/2018/9/12/165cb884988afc22?imageView2/0/w/1280/h/960/ignore-error/1" alt=""></p>
+<a id="more"></a>   
+
+<h4 id="所在公司：Jollychic"><a href="#所在公司：Jollychic" class="headerlink" title="* 所在公司：Jollychic"></a>* 所在公司：Jollychic</h4><h4 id="项目背景："><a href="#项目背景：" class="headerlink" title="* 项目背景："></a>* 项目背景：</h4><ol>
+<li>我们公司分别有4个项目，日志分别存储在国外的aws和Google云 还有国内的阿里云，存了数以TB级别的日志，当业务部门要求需要所有订单的ip信息用于审计订单的真实性，突然发现日志系统无法一次性查找到我所有需要的信息。</li>
+<li>业务在快速扩展，现在服务越来越多，我们现在es集群现在负载越来越高，为了服务高可用,会对所有应用日志规范和kibana输出的日志类型-格式进行调整。</li>
+</ol>
+<h4 id="现在痛点："><a href="#现在痛点：" class="headerlink" title="*  现在痛点："></a>*  现在痛点：</h4><ol>
+<li>每个应用Java服务日志目录不统一.</li>
+<li>日志输出的格式没有规范。</li>
+<li>日志本地保留多长时间,是否做切割压缩功能。</li>
+</ol>
+<ul>
+<li>项目环境: 系统统一和生产一致。Centos7.1</li>
+<li>项目时间：1个星期规划时间 </li>
+<li>测试：日志规范</li>
+</ul>
+<h4 id="项目会议方案："><a href="#项目会议方案：" class="headerlink" title="* 项目会议方案："></a>* 项目会议方案：</h4><ol>
+<li>日志是记录用户访问行为和服务运行状态的信息，是应用软件基本的输出单元，做到日志输出位置、命名、格式规范，可以大大方便后续应用服务监控和数据分析。 </li>
+<li>日志目录结构</li>
+<li>日志类型</li>
+<li>日志要求配置</li>
+<li>日志级别</li>
+<li>日志分割与周期</li>
+<li>日志保留要求</li>
+</ol>
+<h4 id="项目日志规范："><a href="#项目日志规范：" class="headerlink" title="* 项目日志规范："></a>* 项目日志规范：</h4><p>日志级别我们已经有了较好的规范了<br>只在必要时打印日志</p>
+<ul>
+<li>面对不确定因素时(Warning/Info)</li>
+<li>订单、支付、物流等核心业务场景(Info)</li>
+<li>程序运行错误(Error)</li>
+</ul>
+<h5 id="规范细节："><a href="#规范细节：" class="headerlink" title="规范细节："></a>规范细节：</h5><ol>
+<li>生产代码禁止以System.out.print及Throwable.printStackTrace的方式输出日志信息，必须用Logger替代。必须引用org.slf4j.Logger org.slf4j.LoggerFactory</li>
+<li>对trace/debug/info级别的日志输出，必须使用条件输出形式，否则大量的日志会增加来自对象toString的性能成本</li>
+<li>对于异常堆栈的输出，必须以log.XXX (“msg”,e)的形式输出，禁止log.XXX (“msg”+e)的错误形式</li>
+<li>Log等级如何使用？Warning, debug, info, error …etc. Eg: 对系统原因造成业务处理失败的事件，需要记录错误日志。非系统原因的业务处理失败，不应该记录错误日志（推荐使用warn级别）。</li>
+<li>设置Log的rolling strategy来限制Log文件的大小。</li>
+<li>Log的内容包含哪些有用的信息？日期，方法名，入口参数，出口结果等。</li>
+<li>JollyException 日志规范<ul>
+<li>所有已知业务错误可以标记为JollyException</li>
+<li>可制定公司规范的标准日志代码</li>
+<li>自定义业务代码按照业务分类       </li>
+</ul>
+</li>
+</ol>
+<h4 id="项目日志存储周期："><a href="#项目日志存储周期：" class="headerlink" title="* 项目日志存储周期："></a>* 项目日志存储周期：</h4><p>现在很多上了kubernetes和docker，像我们是没有kubernetes，但是用的docker，本地日志不再长期保存，并且现在的主机数量以及日志数量也是难以支持研发上机查询，所以我们本地只保存不到1G的日志，其他日志由阿里云直接采集走在日志服务上汇集。</p>
+<p>阿里云日志是支持无限期存储的，目前我们有部分比较重要的日志选择了永久保存，并定期存储到阿里云oss。</p>
+<h4 id="日志分析平台部署："><a href="#日志分析平台部署：" class="headerlink" title="* 日志分析平台部署："></a>* 日志分析平台部署：</h4><p> 搭建(ElasticSearch + Logstash+ kafka+ Kibana ) Kafka为消息中心的ELK日志平台 。</p>
+<h5 id="平台相关产品组件介绍："><a href="#平台相关产品组件介绍：" class="headerlink" title="* 平台相关产品组件介绍："></a>* 平台相关产品组件介绍：</h5><p>将我们的系统日志、网站日志、应用系统日志等各种日志进行收集、过滤、清洗，然后进行集中存放并可用于实时检索、分析。</p>
+<ul>
+<li>Elasticsearch ：分布式搜索引擎。</li>
+<li>Logstash ：数据收集处理引擎。</li>
+<li>Kibana ：可视化化平台。</li>
+<li>引入Kafka实现缓存机制.</li>
+</ul>
+<h4 id="日志平台实现结果："><a href="#日志平台实现结果：" class="headerlink" title="* 日志平台实现结果："></a>* 日志平台实现结果：</h4><p>为保证日志传输数据的可靠性和稳定性，引入Kafka作为消息缓冲队列，位于各个节点上的Logstash Agent（一级Logstash，主要用来传输数据）先将数据传递给消息队列，接着，Logstash server（二级Logstash，主要用来拉取消息队列数据，过滤并分析数据）将格式化的数据传递给Elasticsearch进行存储。最后，由Kibana将日志和数据呈现给用户。<br>由于引入了Kafka缓冲机制，即使远端Logstash server因故障停止运行，数据也不会丢失，可靠性得到了大大的提升。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chengyangyang.com/2017/06/10/Financing/%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E8%90%BD%E5%9C%B0%EF%BC%9A%E5%88%B6%E5%AE%9A%E6%97%A5%E5%BF%97%E8%A7%84%E8%8C%83/" data-id="ckr4awe5h0003vy8364vnbgo5"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Financing/" rel="tag">Financing</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/06/12/Practice/%20%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E7%AE%80%E5%8E%86%EF%BC%8C%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%A6%82%E4%BD%95%E6%8B%9B%E8%81%98%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            如何写好简历，技术管理如何招聘？
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/04/12/Practice/%E9%9D%A2%E8%AF%95%E6%8A%80%E5%B7%A7%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E5%93%AA%E4%BA%9B%EF%BC%8C%E6%88%90%E4%B8%BA%E9%9D%A2%E8%AF%95%E4%B8%BB%E8%A7%92/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">面试技巧如何修炼哪些，成为面试主角!</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: 'dc0b1bea783e8da99942',
+        clientSecret: '01fb9233aa2893fcc863b1437f4335d21402ae3f',
+        repo: 'chengyangyang.github.io',
+        owner: 'yangcvo',
+        admin: ['yangcvo'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 Yancy</li>
+      <li>Powered by <a href="http://blog.chengyangyang.com" target="_blank">Yancy</a></li>
+      <li>Work blog  <a href="https://weblog.chengyangyang.com" target="_blank" rel="noopener">weblog.chengyangyang.com</a></li>
+      <!--
+      <li><a href="/">Yancy</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Yancy"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/Project">Project</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2015/05/20/Pastime/Pastime/">Pastime</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="https://www.linkedin.com/in/%E6%B4%8B%E6%B4%8B-%E7%A8%8B-758332121/" target="_blank" rel="noopener">linkedin</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2014/03/21/Whoami/About/">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
