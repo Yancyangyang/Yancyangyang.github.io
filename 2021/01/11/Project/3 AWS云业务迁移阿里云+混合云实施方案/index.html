@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Personal blog, thinking and sharing of technology and life">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    (2017/12–2018/01）softlayer云业务迁移阿里云+混合云实施方案 |
+    
+    Yancy</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Project/3 AWS云业务迁移阿里云+混合云实施方案" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      (2017/12–2018/01）softlayer云业务迁移阿里云+混合云实施方案
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/01/11/Project/3%20AWS%E4%BA%91%E4%B8%9A%E5%8A%A1%E8%BF%81%E7%A7%BB%E9%98%BF%E9%87%8C%E4%BA%91+%E6%B7%B7%E5%90%88%E4%BA%91%E5%AE%9E%E6%96%BD%E6%96%B9%E6%A1%88/" class="article-date">
+  <time datetime="2021-01-10T22:18:06.000Z" itemprop="datePublished">2021-01-11</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p><img src="https://www.asiacloudsolutions.com/wp-content/uploads/2017/06/logo-alibaba-cloud-alicloud.png" alt=""></p>
+<a id="more"></a>   
+
+<h4 id="√-所在公司：Jollychic"><a href="#√-所在公司：Jollychic" class="headerlink" title="√ 所在公司：Jollychic"></a>√ 所在公司：Jollychic</h4><h4 id="√-项目需求背景："><a href="#√-项目需求背景：" class="headerlink" title="√ 项目需求背景："></a>√ 项目需求背景：</h4><ol>
+<li>因公司供应商大部分是在国内，需要上ERP系统上传图片资料，为了网站访问稳定性和质量高效，建议把softlayer后台系统全部迁移回国内云+IDC机房存储运行。</li>
+<li>18年开始，了解了下国内各大厂商的公有云，阿里云是最早支持VPC网络模式。（18年开始已经全线支持了）</li>
+<li>因数据的重要性，还需要在国内做成混合云模式，对核心重要数据托管第三方机房。</li>
+<li>最关心的三个混合云要素是安全性、交付可控、可运维。</li>
+<li>安全性方面，用户使用混合云的最大目的就是保障数据安全，数据能够保存在本地，保障数据的合规。</li>
+<li>交付方面，用户往往希望能够满足在不同的地理位置部署，极端情况下，希望能够物理隔离，通过线下的方式升级，这方面国内阿里云。</li>
+</ol>
+<h4 id="√-项目参与人员：："><a href="#√-项目参与人员：：" class="headerlink" title="√ 项目参与人员：："></a>√ 项目参与人员：：</h4><p>四个个项目-分别：由我为主导负责人 （系统运维3个人，大数据运维1个，DBA1个）（项目研发小组leader）</p>
+<h4 id="√-项目会议方案："><a href="#√-项目会议方案：" class="headerlink" title="√  项目会议方案："></a>√  项目会议方案：</h4><ol>
+<li>迁移业务梳理评估核心业务&amp;非核心业务分部</li>
+<li>阿里云网络提前部署</li>
+<li>迁移系统，应用，存储，数据库，大数据 迁移进行分类。</li>
+<li>迁移的详细操作步骤 </li>
+<li>故障测试模拟演练</li>
+</ol>
+<h4 id="√项目迁移设计步骤："><a href="#√项目迁移设计步骤：" class="headerlink" title="√项目迁移设计步骤："></a>√项目迁移设计步骤：</h4><p>迁移时间：<br>安排周末双休日进行</p>
+<p>迁移前准备工作： </p>
+<ol>
+<li>对softlayer云即将迁移核心服务梳理和对应研发关键主备责任人。</li>
+<li>对需要迁移的集群应用，中间件等，做好快照以及备份数据。</li>
+<li>确保系统时间与所在地域的标准时间一致。</li>
+<li>检查授权应用。源服务器迁移到阿里云后，系统底层硬件设备会发生变化，可能会导致一些跟硬件绑定的应用许可证（license）失效，您需要做好检查。</li>
+<li>检查网络环境。</li>
+</ol>
+<ul>
+<li>如果是跨国际地域，由于网络环境较不稳定，具体操作，需要规划国际地域迁移到当地阿里云，迁移完成后，将新建的镜像复制到目标阿里云地域。</li>
+<li>如果是网络可以打通VPC内网，建议在创建迁移任务时网络模式选择内网传输。使用内网传输能获得比通过公网更快速更稳定的数据传输效果，提高迁移工作效率。</li>
+<li>对于服务器操作系统而言 将数据和应用软件、操作系统环境、系统环境变量等全部以“快照”或者“同步复制”形式迁移到新服务器中。由此实现服务器环境的整体迁移。</li>
+</ul>
+<p>准备工作完成后，即可开始正式的迁移操作，首先对阿里云先使用测试机演练。</p>
+<p>迁移实施中： </p>
+<ol>
+<li><p>在阿里云网络进行规划以后，使用迁云工具迁移服务器至阿里云。目前阿里云推出SMC。SMC支持全量迁移、增量迁移、批量迁移、VPC内网迁移，并且提供交互式操作的Web服务页面SMC控制台。</p>
+</li>
+<li><p>首先完成云上缓存、消息和应用等中间件的购买和开通，完成线下中间件到云上中间件的割接；</p>
+</li>
+<li><p>存储迁移：非结构化数据快速迁云，支持完成全量与增量数据迁移，协助客户验证全量和增量数据迁移的效果，并完成线下存储数据到云上存储数据的割接。</p>
+</li>
+<li><p>数据库迁移：一起完成全量与增量数据库迁移，阿里云实施云上数据库迁移方案，指导客户完成云上数据库的购买和开通，提供技术支持协助您，完成全量和增量数据库迁移</p>
+</li>
+<li><p>混合云组网：大型业务系统迁移复杂，采用逐步迁移的混合云组网设计，保证在云上和云下IDC机房链路畅通，协助客户完成专线或虚拟专用网络VPN的混合云组网，完成混合云组网的网段、路由及安全策略的实施，及业务系统混合云组网的割接。</p>
+</li>
+</ol>
+<p>迁移后校验测试：</p>
+<ol>
+<li>不限于数据一致性测试、数据完整性测试、应用会话状态完<br>整性测试、连接中断测试、数据恢复测试。只有这样才能保证迁移的安全性和有效性。</li>
+</ol>
+<h4 id="√-项目迁移后收益："><a href="#√-项目迁移后收益：" class="headerlink" title="√ 项目迁移后收益："></a>√ 项目迁移后收益：</h4><ol>
+<li>改善了供应商打开网页响应慢的问题&gt; 90% 提升数据安全。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chengyangyang.com/2021/01/11/Project/3%20AWS%E4%BA%91%E4%B8%9A%E5%8A%A1%E8%BF%81%E7%A7%BB%E9%98%BF%E9%87%8C%E4%BA%91+%E6%B7%B7%E5%90%88%E4%BA%91%E5%AE%9E%E6%96%BD%E6%96%B9%E6%A1%88/" data-id="ckr4i7xgz0005aq838ofrfkwn"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Project/" rel="tag">Project</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/01/11/Project/2.%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%96%BD-%E5%AE%8C%E5%96%84%E6%97%A5%E5%BF%97%E8%A7%84%E8%8C%83%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            (2017/03–2017/04) 日志分析平台系统实施-完善日志规范化
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/12/12/Project/1.%E6%8E%A8%E5%8A%A8JC%E5%85%A8%E7%AB%99-%E8%A7%84%E5%88%92%E7%81%B0%E5%BA%A6%E7%8E%AF%E5%A2%83%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AE%9E%E6%96%BD/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">(2016.11-2016.12）推动JC全站-规划灰度环境发布系统方案实施</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: 'dc0b1bea783e8da99942',
+        clientSecret: '01fb9233aa2893fcc863b1437f4335d21402ae3f',
+        repo: 'chengyangyang.github.io',
+        owner: 'yangcvo',
+        admin: ['yangcvo'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 Yancy</li>
+      <li>Powered by <a href="http://blog.chengyangyang.com" target="_blank">Yancy</a></li>
+      <li>Work blog  <a href="https://weblog.chengyangyang.com" target="_blank" rel="noopener">weblog.chengyangyang.com</a></li>
+      <!--
+      <li><a href="/">Yancy</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Yancy"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/Project">Project</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2015/05/20/Pastime/Pastime/">Pastime</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="https://www.linkedin.com/in/%E6%B4%8B%E6%B4%8B-%E7%A8%8B-758332121/" target="_blank" rel="noopener">linkedin</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2014/03/21/Whoami/About/">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
