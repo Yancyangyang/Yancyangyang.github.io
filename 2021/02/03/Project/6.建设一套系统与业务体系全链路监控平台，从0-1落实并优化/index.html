@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Personal blog, thinking and sharing of technology and life">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    (2018/09–2018/10）建设一套系统与业务体系全链路监控平台，从0-1落实并优化 |
+    
+    Yancy</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Project/6.建设一套系统与业务体系全链路监控平台，从0-1落实并优化" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      (2018/09–2018/10）建设一套系统与业务体系全链路监控平台，从0-1落实并优化
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/02/03/Project/6.%E5%BB%BA%E8%AE%BE%E4%B8%80%E5%A5%97%E7%B3%BB%E7%BB%9F%E4%B8%8E%E4%B8%9A%E5%8A%A1%E4%BD%93%E7%B3%BB%E5%85%A8%E9%93%BE%E8%B7%AF%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0%EF%BC%8C%E4%BB%8E0-1%E8%90%BD%E5%AE%9E%E5%B9%B6%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2021-02-02T22:18:06.000Z" itemprop="datePublished">2021-02-03</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p><img src="" alt=""></p>
+<a id="more"></a>   
+
+
+
+<h4 id="√-所在公司：达飞控股"><a href="#√-所在公司：达飞控股" class="headerlink" title="√ 所在公司：达飞控股"></a>√ 所在公司：达飞控股</h4><h4 id="√-项目背景："><a href="#√-项目背景：" class="headerlink" title="√ 项目背景："></a>√ 项目背景：</h4><ol>
+<li>系统监控不够标准化，业务监控平台是个盲区，应用状态未知。</li>
+<li>监控作为运维的眼睛，稳定性的必要保障，必须要做好，做全面，做稳定，所有<br>服务都挂了，监控不能挂。</li>
+</ol>
+<h4 id="√-项目人员："><a href="#√-项目人员：" class="headerlink" title="√ 项目人员："></a>√ 项目人员：</h4><p>研发与QA全部由我自己一个人去推进。</p>
+<h4 id="√-监控方面："><a href="#√-监控方面：" class="headerlink" title="√ 监控方面："></a>√ 监控方面：</h4><ol>
+<li>机器性能监控、基础环境监控、日志监控、网络监控、访问质量监控、业务监控。</li>
+</ol>
+<h4 id="√-监控方案："><a href="#√-监控方案：" class="headerlink" title="√ 监控方案："></a>√ 监控方案：</h4><ol>
+<li>监控系统的由来</li>
+<li>基本组件介绍</li>
+<li>系统架构介绍</li>
+<li>实战规划落地</li>
+</ol>
+<h4 id="√-监控需求："><a href="#√-监控需求：" class="headerlink" title="√ 监控需求："></a>√ 监控需求：</h4><ol>
+<li>定时执行SQL触发告警</li>
+<li>查看主机的状态</li>
+<li>统计接口调用耗时、QPS、成功率</li>
+<li>分布式日志收集</li>
+<li>接口调用链分析</li>
+</ol>
+<h4 id="√-历史解决方案的缺点："><a href="#√-历史解决方案的缺点：" class="headerlink" title="√ 历史解决方案的缺点："></a>√ 历史解决方案的缺点：</h4><ol>
+<li>新增告警需要编写代码</li>
+<li>相同功能重复开发</li>
+<li>没有告警收敛</li>
+<li>前端参与可视化界面的开发</li>
+<li>使用关系型数据库存储，查询效率较低</li>
+<li>没有JVM、中间件、告警等监控</li>
+</ol>
+<h4 id="√-新方案的优点："><a href="#√-新方案的优点：" class="headerlink" title="√ 新方案的优点："></a>√ 新方案的优点：</h4><ol>
+<li>不需要自己编写代码</li>
+<li>不同的小组开发人员可以共用同一套系统</li>
+<li>自带告警收敛、静默功能</li>
+<li>新增或修改告警规则很方便</li>
+<li>自带可视化界面</li>
+<li>使用时间序列数据库</li>
+<li>根据监控数据去优化服务</li>
+</ol>
+<h4 id="√-基本组件"><a href="#√-基本组件" class="headerlink" title="√ 基本组件:"></a>√ 基本组件:</h4><p>（系统层面-Zabbix）（业务层面-prometheus+consul+skye+Grafana）<br>（实现全链路监控采用开源二次开发：pinpoint，Skywalking）</p>
+<h4 id="实现效果图形："><a href="#实现效果图形：" class="headerlink" title="实现效果图形："></a>实现效果图形：</h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chengyangyang.com/2021/02/03/Project/6.%E5%BB%BA%E8%AE%BE%E4%B8%80%E5%A5%97%E7%B3%BB%E7%BB%9F%E4%B8%8E%E4%B8%9A%E5%8A%A1%E4%BD%93%E7%B3%BB%E5%85%A8%E9%93%BE%E8%B7%AF%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0%EF%BC%8C%E4%BB%8E0-1%E8%90%BD%E5%AE%9E%E5%B9%B6%E4%BC%98%E5%8C%96/" data-id="ckr4osw7q00000g83hethcwg7"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Project/" rel="tag">Project</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/02/03/Project/5.%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D-%E4%BC%81%E4%B8%9A%E7%BA%A7%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            (2018/06–2018/07）互联网金融-企业级网络信息安全中心建设
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/01/11/Project/2.%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%96%BD-%E5%AE%8C%E5%96%84%E6%97%A5%E5%BF%97%E8%A7%84%E8%8C%83%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">(2017/11–2017/12) 日志分析平台系统实施-完善日志规范化</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: 'dc0b1bea783e8da99942',
+        clientSecret: '01fb9233aa2893fcc863b1437f4335d21402ae3f',
+        repo: 'chengyangyang.github.io',
+        owner: 'yangcvo',
+        admin: ['yangcvo'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 Yancy</li>
+      <li>Powered by <a href="http://blog.chengyangyang.com" target="_blank">Yancy</a></li>
+      <li>Work blog  <a href="https://weblog.chengyangyang.com" target="_blank" rel="noopener">weblog.chengyangyang.com</a></li>
+      <!--
+      <li><a href="/">Yancy</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Yancy"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/Project">Project</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2015/05/20/Pastime/Pastime/">Pastime</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="https://www.linkedin.com/in/%E6%B4%8B%E6%B4%8B-%E7%A8%8B-758332121/" target="_blank" rel="noopener">linkedin</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2014/03/21/Whoami/About/">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
