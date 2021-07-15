@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Personal blog, thinking and sharing of technology and life">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    (2017.08-2017.09）JC全站-渲染后台大规模故障演练实践 |
+    
+    Yancy</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Project/4. JC全站-渲染后台故障演练实践" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      (2017.08-2017.09）JC全站-渲染后台大规模故障演练实践
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/09/06/Project/4.%20JC%E5%85%A8%E7%AB%99-%E6%B8%B2%E6%9F%93%E5%90%8E%E5%8F%B0%E6%95%85%E9%9A%9C%E6%BC%94%E7%BB%83%E5%AE%9E%E8%B7%B5/" class="article-date">
+  <time datetime="2020-09-05T22:18:06.000Z" itemprop="datePublished">2020-09-06</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p><img src="http://image-file.chengyangyang.com/iamge%3D111.png" alt=""></p>
+<a id="more"></a>   
+
+
+
+<h4 id="√-所在公司：Jollychic"><a href="#√-所在公司：Jollychic" class="headerlink" title="√ 所在公司：Jollychic"></a>√ 所在公司：Jollychic</h4><h4 id="√-项目背景："><a href="#√-项目背景：" class="headerlink" title="√ 项目背景："></a>√ 项目背景：</h4><p>现状，从16年开始jollychic 整体技术架构从早期的单体应用开始向微服务化迈进，经过垂直／水平拆分，再将核心能力下沉抽象。</p>
+<p>在复杂的分布式系统中，伴随着海量请求、节假日峰值流量一起出现的. 很有可能是预料之中以及意料之外的各种故障。在很多情况下，由于事故处理预案的缺失或者预案本身的不可靠，以及开发人员故障处理经验的缺失，造成在各种报警之中自乱了阵脚，从而贻误了最佳战机。特别是一些平时线上没出现过的异常故障，一旦突然出现，往往措手不及。</p>
+<p>架构的演进带来了以下三个突出问题：</p>
+<p>架构的大规模变更过程导致稳定性故障频发<br>架构的复杂化导致 “流程优化（Code Review/ 上线等）及稳定性盘点” 等形式的保障方式无法满足稳定性保障需求<br>需要验证服务治理、监控警报、DevOps 等基础设施在故障出现时能有效工作，协助团队快速消灭问题</p>
+<p>近2年来，jollychic因故障导致的直接或间接资损高达百万+，更是对公司企业形象无形损害。</p>
+<p>总结一下，故障演练主要有以下几个目标：</p>
+<p>1.确保系统按我们预想的方式应对故障<br>2.寻找系统中未预料到的弱点<br>3.提高系统架构的容错能力与健壮性<br>4.提高开发和运维的故障应急效率<br>5.提早暴露问题，降低线上故障发生率与复发率<br>6.提高用户使用体验</p>
+<h4 id="√-项目参与人员："><a href="#√-项目参与人员：" class="headerlink" title="√ 项目参与人员："></a>√ 项目参与人员：</h4><p>由技术CTO主导负责，运维核心业务人员我负责，DBA人员2个人，测试团队，项目经理各部门小组成员。</p>
+<h4 id="√-项目演练对象："><a href="#√-项目演练对象：" class="headerlink" title="√ 项目演练对象："></a>√ 项目演练对象：</h4><p>演练的对象即演练的位置，可以针对应用本身，可以针对应用下游，也可以针对应用所在机器</p>
+<p><img src="http://image-file.chengyangyang.com/image-11.png" alt=""></p>
+<h4 id="√-项目演练具体过程："><a href="#√-项目演练具体过程：" class="headerlink" title="√ 项目演练具体过程："></a>√ 项目演练具体过程：</h4><p>常见的故障类型有以下一些：<br><img src="http://image-file.chengyangyang.com/iamge%3D122.png" alt=""></p>
+<p>渲染后台是较为底层的服务，redis是主要依赖的中间件，也是发生故障最多的地方。所以演练的重点是redis；</p>
+<ul>
+<li><p>Redis<br>单点故障：kill one sentinel，kill all sentinel，kill master，<br>主从切换：来回 kill master<br>服务器宕机：one sentinel宕机，all sentinel 宕机，master宕机，all 宕机<br>网络异常： one sentinel网络不通，master网络不通<br>内存异常：redis maxme meroy打满，服务器内存耗尽<br>CPU异常：one sentinel满载，master满载<br>磁盘异常：disk io 高，磁盘写满<br>备用redis切换<br>proxy<br>单点故障<br>master 选举<br>负载均衡<br>proxy 高负载压测</p>
+</li>
+<li><p>后续目标：<br>CPU异常、网络异常、内存异常、磁盘异常<br>千台大集群proxy验证</p>
+</li>
+<li><p>mysql<br>网络异常<br>异常重连</p>
+</li>
+</ul>
+<h4 id="通知涉及的外部人员"><a href="#通知涉及的外部人员" class="headerlink" title="通知涉及的外部人员:"></a>通知涉及的外部人员:</h4><p>根据评估出的影响范围通知相关业务应用 RD、运维 RD、基础组件 RD。通知内容要素：</p>
+<p>故障演练的发起应用<br>故障演练起止时间<br>故障演练应用集群环境<br>对每个相关应用的影响预估。比如：对下游依赖服务的调用峰值 QPS、上游服务收到的异常请求比率<br>推荐做法：</p>
+<p>将所有相关人员拉入一个工作群，群名「XXX应用故障演练」，在群里发送故障演练通知、组织协同.</p>
+<h4 id="√-项目演练目的："><a href="#√-项目演练目的：" class="headerlink" title="√ 项目演练目的："></a>√ 项目演练目的：</h4><p>1.预案有效性：主要验证“备胎”靠不靠谱；系统强依赖的模块需要有降级、备用方案；需要对这类方案做有效性验证；<br>2.监控报警：报警的有无、提示消息是否准确、报警实效是5分钟还是半小时；<br>3.故障复现：故障的后续Action是否真的有效，完成质量如何，只有真实重现和验证，才能完成闭环。发生过的故障也应该时常拉出来练练，看是否有劣化趋势；<br>4.架构容灾测试：主备切换、负载均衡，流量调度等为了容灾而存在的手段的时效和效果，容灾手段本身健壮性如何；<br>5.参数调优：限流的策略调优、报警的阈值、超时值设置等；</p>
+<p>需要把故障以场景化的方式沉淀，以可控成本在线上模拟故障，让系统和开发人员平时有更多实战机会，加速系统、工具、流程、人员的进步。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chengyangyang.com/2020/09/06/Project/4.%20JC%E5%85%A8%E7%AB%99-%E6%B8%B2%E6%9F%93%E5%90%8E%E5%8F%B0%E6%95%85%E9%9A%9C%E6%BC%94%E7%BB%83%E5%AE%9E%E8%B7%B5/" data-id="ckr4lp4t8000w42836elegej9"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Project/" rel="tag">Project</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2020/12/12/Project/1.%E6%8E%A8%E5%8A%A8JC%E5%85%A8%E7%AB%99-%E8%A7%84%E5%88%92%E7%81%B0%E5%BA%A6%E7%8E%AF%E5%A2%83%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AE%9E%E6%96%BD/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            (2016.11-2016.12）推动JC全站-规划灰度环境发布系统方案实施
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/01/02/Financing/2020%E5%B9%B4%E7%BB%8F%E6%B5%8E%E8%B5%B0%E5%8A%BF%EF%BC%8C%E6%80%8E%E4%B9%88%E5%8E%BB%E5%88%86%E6%9E%90%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">2020年经济走势，怎么去分析？</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: 'dc0b1bea783e8da99942',
+        clientSecret: '01fb9233aa2893fcc863b1437f4335d21402ae3f',
+        repo: 'chengyangyang.github.io',
+        owner: 'yangcvo',
+        admin: ['yangcvo'],
+        // id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 Yancy</li>
+      <li>Powered by <a href="http://blog.chengyangyang.com" target="_blank">Yancy</a></li>
+      <li>Work blog  <a href="https://weblog.chengyangyang.com" target="_blank" rel="noopener">weblog.chengyangyang.com</a></li>
+      <!--
+      <li><a href="/">Yancy</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Yancy"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/Project">Project</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2015/05/20/Pastime/Pastime/">Pastime</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="https://www.linkedin.com/in/%E6%B4%8B%E6%B4%8B-%E7%A8%8B-758332121/" target="_blank" rel="noopener">linkedin</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/2014/03/21/Whoami/About/">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
