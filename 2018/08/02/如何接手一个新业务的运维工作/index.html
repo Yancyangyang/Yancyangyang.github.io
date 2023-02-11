@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html lang="en" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>如何接手一个新业务的运维工作 - Hexo</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="
+
+
+如何接手一个新业务的运维工作丑话说前头先跟研发l...">
+  <meta name="author" content="John Doe">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: '/images/theme/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">如何接手一个新业务的运维工作</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">如何接手一个新业务的运维工作</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>August 02, 2018</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3164</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+          <p><p><img   class="lazyload" data-original="https://drscdn.500px.org/photo/105604753/q%3D80_m%3D2000/v2?sig=0e5136aaeaaeef75c4788e2081dfa6f77a46fea35a0f0d0bd3e5477cd366e2d2" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p></p>
+        
+        <h3 id="如何接手一个新业务的运维工作"><a href="#如何接手一个新业务的运维工作" class="headerlink" title="如何接手一个新业务的运维工作"></a>如何接手一个新业务的运维工作</h3><h2 id="丑话说前头"><a href="#丑话说前头" class="headerlink" title="丑话说前头"></a>丑话说前头</h2><p>先跟研发leader沟通，灌输运维理念，丑话说在前头，我们不做保姆式运维，我们会致力于线上服务安全、稳定、低成本、快速迭代，从运维视角提高产品力。开发机、测试环境，研发自己搞，我们可以协助帮忙，做专业的咨询服务，想让我们直接操刀开发环境的变更，免谈！</p>
+<h2 id="业务概要了解"><a href="#业务概要了解" class="headerlink" title="业务概要了解"></a>业务概要了解</h2><p>了解业务相关的人，对应的研发同学、研发leader、测试同学、测试leader、产品经理分别是谁，联系方式存下来，拉个群，出了问题可以找到对应的人。<br>了解服务是干啥的，解决了什么问题，业界有对标的开源产品吗，方便我们快速认识这个产品。<br>了解服务的上下游，依赖哪些服务，哪些服务依赖我，对应的接口人是谁，这里先简单了解一下即可。<br>了解服务部署情况，部署在哪些机房，用什么语言编写的，基础网络、专线带宽、机房出口是否靠谱，是否曾因基础设施导致过问题，当前主要痛点是什么。</p>
+<h2 id="业务串讲"><a href="#业务串讲" class="headerlink" title="业务串讲"></a>业务串讲</h2><p>要求研发同学（或者上一任运维同学）准备PPT，做一个业务串讲，讲解一些研发同学希望传达给运维同学的信息，讲解一些运维同学希望从研发这得到的信息。比如：详细部署拓扑、服务整体架构、数据流、提测变更流程、监控方式、部署到了哪些机器、机器登录方式、每个机器上是什么模块、OS参数是否有调优，考量是什么、用到了哪些第三方软件，考量是什么，比如为啥用了tomcat而不是resin、相关wiki、故障处理预案、常见故障、当前线上问题……等等<br>如果业务有单点，不接，让研发改造。如果运维的老板的老板强制要求，丑话说前头：因单点导致的问题，运维不背锅。</p>
+<h2 id="资产梳理"><a href="#资产梳理" class="headerlink" title="资产梳理"></a>资产梳理</h2><p>正式准备接手，第一步，梳理资产。比如用到了哪些域名，这些域名对应哪些业务、哪些虚IP，分别是提供了什么服务、哪些机器，分别部署了什么模块、业务在哪些机房、用了多少带宽、总带宽情况、是否有其他业务共用争抢。<br>机器需要拿到更详尽的信息，比如机器配置、机架位、IP、管理卡IP等等，公司应该有个CMDB供查询。如果没有，运维同学，需要你去构建这个CMDB。<br>后面要考虑机器是否需要有备机、备件，机型是否可以统一。</p>
+<h2 id="基础监控"><a href="#基础监控" class="headerlink" title="基础监控"></a>基础监控</h2><p>知道有哪些资产了，就可以对这些资产做监控了，比如域名连通性监控&#x2F;延迟监控、虚IP的连通性监控&#x2F;延迟监控、机器宕机监控、机器硬件监控、sshd&#x2F;crond等系统进程监控、系统运行的进程总数监控、系统参数配置监控，可以参看我之前的文章《完备的监控应覆盖什么》</p>
+<h2 id="服务梳理"><a href="#服务梳理" class="headerlink" title="服务梳理"></a>服务梳理</h2><p>吃透之前串讲时给的架构图、数据流图、部署拓扑图。从运维层面，最好还要知道公司网络拓扑图。<br>了解每个模块的情况，部署在哪些机器上，部署在哪个目录，用什么账号启动的，日志打到哪里了，用什么语言编写的，怎么上线的，主要吃CPU资源还是内存还是磁盘还是IO，需要预留多少资源，平时利用率是多少，应该配置多大的阈值做监控，是否需要watchdog自动拉起，日志里出现哪些关键字需要报警，以及其他各种需要注意的问题。</p>
+<h2 id="业务监控"><a href="#业务监控" class="headerlink" title="业务监控"></a>业务监控</h2><p>基本的进程、端口存活性监控，机器利用率监控、日志关键字监控、日志不滚动监控、关联的服务的监控等等，后面会做API粒度的监控，来推动业务优化。</p>
+<h2 id="标准化改造"><a href="#标准化改造" class="headerlink" title="标准化改造"></a>标准化改造</h2><p>机器命名方式、操作系统发行版、OS版本、第三方软件，比如jdk、tomcat、nginx，都要统一，做标准化方案。<br>服务扩容、变更、下线做一键化，每次升级只需要给个版本号即可，此时研发操作还是运维操作效果一样，故而可以交给研发上线，释放运维人力，权限要控制好。<br>重复的常规操作也要固化成脚本，一键完成。<br>梳理故障自愈场景，看平时有哪些故障的处理方式是固定的，抽象为脚本，报警之后自动触发，无人值守处理。<br>公司如果有一些基础设施，比如名字服务、MQ、日志平台，推动研发改造，将新服务接入。如果公司还没有这些基础设施，作为运维这个角色，可以着手搞起。</p>
+<h2 id="SOP梳理"><a href="#SOP梳理" class="headerlink" title="SOP梳理"></a>SOP梳理</h2><p>故障预案是一个非常重要的事情，线上没出故障之前，就应该提前去想，服务可能会出什么故障，如果真出了，应该如何处理，把处理步骤提前记录下来。毕竟，线上出故障的时候，人都比较紧张，直接看着预案处理，就踏实不少，不容易出错。</p>
+<h2 id="故障演练"><a href="#故障演练" class="headerlink" title="故障演练"></a>故障演练</h2><p>光有预案没有演练，是不靠谱的，没有经过验证的预案是不可信任的。所以，搞个放火演习，把模块搞挂试一把，把机器搞挂试一把，对线上稳定性绝对会有提升。<br>特别是研发说这个模块挂掉，可用性肯定没影响，OK，搞挂试试先。很可能会打他脸，-_-||<br>有些场景演练是会有损的。这种场景还要不要演练？这个需要case by case的看，大部分情况都是要做演练会更好，毕竟，人在这盯着的时候出问题，比晚上睡着了出了问题要强太多。当然， 大规模基础网络故障这种演练，还是算了吧，通常的业务都是不具备机房级容灾的，呵呵</p>
+<h4 id="上面做完了，基本工作就完成了。上面很多事情都是一次性的，那未来的大把时间运维做啥？"><a href="#上面做完了，基本工作就完成了。上面很多事情都是一次性的，那未来的大把时间运维做啥？" class="headerlink" title="上面做完了，基本工作就完成了。上面很多事情都是一次性的，那未来的大把时间运维做啥？"></a>上面做完了，基本工作就完成了。上面很多事情都是一次性的，那未来的大把时间运维做啥？</h4><p>除了再花费部分时间做线上问题处理，我们应该把主要精力来提升业务产品力。做精细化运维，还记得运维九字真言么？“安全稳定高效低成本”，这就是我们的工作方向。下面举几个例子。</p>
+<h2 id="再谈业务监控"><a href="#再谈业务监控" class="headerlink" title="再谈业务监控"></a>再谈业务监控</h2><p>上面谈到过一次业务监控，主要是一些通用的监控指标。我们对产品了解足够之后，应该做一些业务特有的监控，推动研发去做也可以，达到效果就好。<br>比如你运维了一个MQ，消息堆积量是需要监控滴；比如你运维了一个RPC服务，提供了三个接口，这三个接口的响应时长、成功率是需要监控滴；比如你运维了一个S3服务，每个桶的短期带宽增量你是需要监控滴；有那么点感觉了么？ :)<br>API成功率、延迟统计<br>在流量入口的nginx做所有业务线的所有API的成功率和延迟统计，是非常有必要的。把成功率比较低的TopN找出来，把延迟比较大的TopN找出来，让业务去优化。老板会喜欢这个的。</p>
+<h2 id="线上问题梳理"><a href="#线上问题梳理" class="headerlink" title="线上问题梳理"></a>线上问题梳理</h2><p>整理线上所有问题，挨个解决，运维可以搞定的运维搞定，运维搞不定的找研发要排期，每周解决了多少问题，还有多少问题待解决，用周报的方式体现出来。</p>
+<h2 id="成本优化"><a href="#成本优化" class="headerlink" title="成本优化"></a>成本优化</h2><p>通过服务混部、或者统一的资源调度平台来节省机器资源，一台机器便宜的也好几万呢，这个事是比较容易有产出的。</p>
+<h2 id="容量规划"><a href="#容量规划" class="headerlink" title="容量规划"></a>容量规划</h2><p>容量规划和成本优化实际是紧密相关的，容量规划的重点是根据自然增量和运营需求，提前规划准备相应的容量，容量可能包括带宽、专线、网络设备、机器等等；当业务量下来的时候，可以腾挪相关资源支持其他业务线，让这些硬件尽量满负荷运转，物有所值。</p>
+<p>业务精细化运维可以想出各种事情来搞，除了做这事，另一个需要长期投入的是构建运维基础平台，像什么监控系统、部署系统、产品库、资源利用率平台、域名管理、四七层接入配置平台、日志平台、Trace系统等等等等，嗯，其实运维还是挺忙的。</p>
+<h2 id="关于沟通"><a href="#关于沟通" class="headerlink" title="关于沟通"></a>关于沟通</h2><p>最后说一点，接手一个新业务运维，势必与研发有各种沟通，每次沟通都要写会议纪要，发邮件出来，跟进人是谁，时间点是啥时候都要写明白，邮件发送双方团队邮件组，cc各方老大。事后关键节点做check，如未完成，线下沟通，达成一致后追此邮件给结论，说明延期原因以及新的时间点。如果沟通不畅，让老大去协调。</p>
+<h2 id="结合文档这个做了个脑图"><a href="#结合文档这个做了个脑图" class="headerlink" title="结合文档这个做了个脑图"></a>结合文档这个做了个脑图</h2><p><img   class="lazyload" data-original="http://on-img.com/chart_image/5a0279dfe4b06bed41cdc723.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<h3 id="交流学习："><a href="#交流学习：" class="headerlink" title="交流学习："></a>交流学习：</h3><p>🐧  Linux shell_高级运维派: <code>459096184</code>    圈子 (系统运维-应用运维-自动化运维-虚拟化技术研究欢迎加入) <code> 群已满 添加微信群吧,添加我微信拉你进群</code></p>
+<p>🐧  BigData-Exchange School : <code>521621407</code>  圈子（大数据运维)（Hadoop开发人员)（大数据研究爱好者) 欢迎加入 相应Bidata有内部微信交流群互相学习，加入QQ群有链接。</p>
+<p>🐧  个人技术博客 : <code>https://blog.yancy.cc</code>  圈子 运维杂货铺 欢迎访问，全个人技术经验学习笔记。 （现在更新时间频率从1个月调整3月更新一次）</p>
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>John Doe</li>
+    <li><strong>本文链接：</strong><a href="http://example.com/2018/08/02/%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C/index.html" title="http:&#x2F;&#x2F;example.com&#x2F;2018&#x2F;08&#x2F;02&#x2F;%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C&#x2F;index.html">http:&#x2F;&#x2F;example.com&#x2F;2018&#x2F;08&#x2F;02&#x2F;%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operation-and-maintenance-Road/" rel="tag">Operation and maintenance Road</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2018/09/15/%20%E8%BD%AC%E5%9E%8B%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%90%8E%EF%BC%8C%E5%BA%94%E8%AF%A5%E9%81%BF%E8%B8%A9%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F/"><i class="iconfont iconleft"></i>转型技术管理后，应该避踩哪些坑？</a>
+    <a href="/2018/02/12/%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA/">做一个职业的运维人<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C"><span class="toc-text">如何接手一个新业务的运维工作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%91%E8%AF%9D%E8%AF%B4%E5%89%8D%E5%A4%B4"><span class="toc-text">丑话说前头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E6%A6%82%E8%A6%81%E4%BA%86%E8%A7%A3"><span class="toc-text">业务概要了解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E4%B8%B2%E8%AE%B2"><span class="toc-text">业务串讲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E4%BA%A7%E6%A2%B3%E7%90%86"><span class="toc-text">资产梳理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9B%91%E6%8E%A7"><span class="toc-text">基础监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E6%A2%B3%E7%90%86"><span class="toc-text">服务梳理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E7%9B%91%E6%8E%A7"><span class="toc-text">业务监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%8C%96%E6%94%B9%E9%80%A0"><span class="toc-text">标准化改造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOP%E6%A2%B3%E7%90%86"><span class="toc-text">SOP梳理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%85%E9%9A%9C%E6%BC%94%E7%BB%83"><span class="toc-text">故障演练</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%8D%E8%B0%88%E4%B8%9A%E5%8A%A1%E7%9B%91%E6%8E%A7"><span class="toc-text">再谈业务监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E4%B8%8A%E9%97%AE%E9%A2%98%E6%A2%B3%E7%90%86"><span class="toc-text">线上问题梳理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E6%9C%AC%E4%BC%98%E5%8C%96"><span class="toc-text">成本优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E9%87%8F%E8%A7%84%E5%88%92"><span class="toc-text">容量规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A"><span class="toc-text">关于沟通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E6%96%87%E6%A1%A3%E8%BF%99%E4%B8%AA%E5%81%9A%E4%BA%86%E4%B8%AA%E8%84%91%E5%9B%BE"><span class="toc-text">结合文档这个做了个脑图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="toc-text">交流学习：</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=1165958741 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://github.com/Yancyangyang "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="yancy.yangyang@outlook.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
