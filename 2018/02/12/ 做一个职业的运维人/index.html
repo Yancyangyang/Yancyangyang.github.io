@@ -1,394 +1,71 @@
-
-
-<!DOCTYPE html>
-<html lang="en" color-mode=light>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>做一个职业的运维人 - Hexo</title>
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="google" content="notranslate" />
-  
-  <meta name="description" content="
-
-
-很多三四年工作经验的同学，因为缺少必要的职业素养...">
-  <meta name="author" content="John Doe">
-  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
-  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
-  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
-  
-    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
-    <meta rel="msapplication-TileColor" content="#000000">
-  
-
-  
-<link rel="stylesheet" href="/css/style.css">
-
-
-  
-    
-<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
-
-  
-
-  
-    
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
-
-  
-
-  
-    
-      
-        
-        
-<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
-
-      
-        
-        
-<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
-
-      
-  
-
-  <script>
-    var CONFIG = window.CONFIG || {};
-    var ZHAOO = window.ZHAOO || {};
-    CONFIG = {
-      isHome: false,
-      fancybox: true,
-      pjax: false,
-      loading: {
-        gif: '/images/theme/loading.gif',
-        lottie: ''
-      },
-      lazyload: {
-        enable: true,
-        only_post: 'false',
-        loading: {
-          gif: '/images/theme/loading.gif',
-          lottie: ''
-        }
-      },
-      donate: {
-        enable: true,
-        alipay: 'https://pic.izhaoo.com/alipay.jpg',
-        wechat: 'https://pic.izhaoo.com/wechat.jpg'
-      },
-      galleries: {
-        enable: true
-      },
-      fab: {
-        enable: true,
-        always_show: false
-      },
-      carrier: {
-        enable: true
-      },
-      daovoice: {
-        enable: false
-      },
-      preview: {
-        background: {
-          default: '',
-          api: ''
-        },
-        motto: {
-          default: '我在开了灯的床头下，想问问自己的心啊。',
-          typing: true,
-          api: 'https://v2.jinrishici.com/one.json',
-          data_contents: '["data","content"]'
-        },
-      },
-      qrcode: {
-        enable: true,
-        type: 'url',
-        image: '/images/theme/weapp-code.jpg',
-      },
-      toc: {
-        enable: true
-      },
-      scrollbar: {
-        type: 'default'
-      },
-      notification: {
-        enable: false,
-        delay: 4500,
-        list: '',
-        page_white_list: '',
-        page_black_list: ''
-      },
-      search: {
-        enable: false,
-        path: ''
-      }
-    }
-  </script>
-
-  
-
-  
-
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-<body class="lock-screen">
-  <div class="loading" id="loading"></div>
-  
-    
-
-
-  <nav class="navbar">
-    <div class="left">
-      
-        <i class="iconfont iconhome j-navbar-back-home"></i>
-      
-      
-        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
-      
-      
-        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
-      
-      
-    </div>
-    <div class="center">做一个职业的运维人</div>
-    <div class="right">
-      <i class="iconfont iconmenu j-navbar-menu"></i>
-    </div>
-    
-      <div id="qrcode-navbar"></div>
-    
-  </nav>
-
-  
-  
-
-<nav class="menu">
-  <div class="menu-container">
-    <div class="menu-close">
-      <i class="iconfont iconbaseline-close-px"></i>
-    </div>
-    <ul class="menu-content"><li class="menu-item">
-        <a href="/ " class="underline "> 首页</a>
-      </li><li class="menu-item">
-        <a href="/galleries/ " class="underline "> 摄影</a>
-      </li><li class="menu-item">
-        <a href="/archives/ " class="underline "> 归档</a>
-      </li><li class="menu-item">
-        <a href="/tags/ " class="underline "> 标签</a>
-      </li><li class="menu-item">
-        <a href="/categories/ " class="underline "> 分类</a>
-      </li><li class="menu-item">
-        <a href="/about/ " class="underline "> 关于</a>
-      </li></ul>
-    
-      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
-    
-  </div>
-</nav>
-  <main id="main">
-  <div class="article-wrap">
-    <div class="row container">
-      <div class="col-xl-3"></div>
-      <div class="col-xl-6"><article class="article">
-  <div class="wrap">
-    <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
-  <div class="head-mask">
-    <h1 class="head-title">做一个职业的运维人</h1>
-    <div class="head-info">
-      <span class="post-info-item"><i class="iconfont iconcalendar"></i>February 12, 2018</span>
-      
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1639</span>
-    </div>
-  </div>
-</section>
-    <section class="main">
-      <section class="content">
-        
-          <p><p><img   class="lazyload" data-original="https://drscdn.500px.org/photo/174990493/q%3D80_m%3D2000/v2?sig=0b4f535bf35451b39516e5803aeec29ba92e45bc172e962422f2cf61ad56dc8f" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p></p>
-        
-        <p>很多三四年工作经验的同学，因为缺少必要的职业素养的培训，工作的方式方法或多或少存在一些问题，这影响了自身的职业发展。怎么做才算是会工作，这里有几点不成熟的建议，供诸君参考。</p>
-<h3 id="搞清楚公司为什么聘请你"><a href="#搞清楚公司为什么聘请你" class="headerlink" title="搞清楚公司为什么聘请你"></a>搞清楚公司为什么聘请你</h3><p>公司不是慈善机构，而是以营利为目的，公司聘请你，就是为了让你帮助公司去营利，帮助公司解决问题。所以，如果觉得自己在公司没啥用处，有你没你没区别，那就离解聘不远了。</p>
-<h3 id="不断升职加薪的秘诀"><a href="#不断升职加薪的秘诀" class="headerlink" title="不断升职加薪的秘诀"></a>不断升职加薪的秘诀</h3><p>要不断有产出，变成稀缺人才。要想明白自己可以帮公司解决什么问题，帮领导解决什么问题。并不遗余力的去拼搏，相信我，领导看得见你的付出。某些事情你可以做，别人做不了，领导把事情交到你这他放心，你就离加薪不远了，多次如此，就离升职不远了。</p>
-<h3 id="把握好跟领导的关系"><a href="#把握好跟领导的关系" class="headerlink" title="把握好跟领导的关系"></a>把握好跟领导的关系</h3><p>从某种程度上讲，你其实不是在为公司打工，而是在为你的直属上司打工。所以，跟领导的关系尽量不要搞砸了，领导说的对的，要全力支持；做的不合理的，要私下跟领导沟通，用委婉的方式帮他指出问题所在。如果很不幸，你的领导刚愎自用，听不进谏言，那我只能说，良禽择木而栖。</p>
-<h3 id="把握好跟同事的关系"><a href="#把握好跟同事的关系" class="headerlink" title="把握好跟同事的关系"></a>把握好跟同事的关系</h3><p>由于每个人的认知不同，背景知识不同，经验不同，在同一件事情上面的看法会不同，这将是常态。本着理不辨不明的原则，凡事沟通解决，对事不对人，注意表达语气。在这个团体作战的年代，如果你不合群，也会让你的领导难办。只要结果是好的，忍让一下又何妨。</p>
-<h3 id="不断提升自身的软素质"><a href="#不断提升自身的软素质" class="headerlink" title="不断提升自身的软素质"></a>不断提升自身的软素质</h3><p>在职业生涯前期，专业技术能力是推升你往上走的主要动力，职业生涯中期，软素质就会显得尤为重要，职业生涯后期，人格魅力和影响力是不可或缺的。<br>蓝图规划、目标拆解、关键路径、过程管理</p>
-<p>如果只是低头走路，不抬头看方向，容易迷失。工作也是一样，作为员工，要去了解公司战略，部门蓝图，做为领导，要去传达公司战略，部门蓝图，这样，整个团队才知道往哪使劲。把公司目标拆成部门目标，把部门目标拆成团队目标，最后拆成个人目标，了解这些，工作方向才能比较清晰。为了达成目标，我们制定了关键路径，项目、任务都是为目标服务的。老板要你写周报，要你经常汇报，实际就是在做过程管理，怕出意外~</p>
-<h3 id="知道方向了要低头看路"><a href="#知道方向了要低头看路" class="headerlink" title="知道方向了要低头看路"></a>知道方向了要低头看路</h3><p>我们有理想，知道最佳实践，但要想真正落地，还需要知道现状，知道从现实走向理想的路。脱离一线的高层容易活在理想里，我们作为干活的人，却不能靠理想，靠方法论活着，制定出这条路，然后将路的走法同步给你的老板，得到老板的认可，坚定的沿着这条路走下去，才能最终达成目标。</p>
-<h3 id="念念不忘必有回响"><a href="#念念不忘必有回响" class="headerlink" title="念念不忘必有回响"></a>念念不忘必有回响</h3><p>全身心的投入，你会发现自己的能量超乎想象。不知道大家有没有这样的经历，工作中遇到一个问题，百思不得其解，然后你走着想，做着想，吃饭想，睡前想，然后某天早上醒来，灵光乍现，得出一完美方案。忍不住都要为自己的聪明才智鼓鼓掌，这就是念念不忘必有回响。老天眷顾努力的人。</p>
-<h3 id="过程中要及时反馈，经常汇报"><a href="#过程中要及时反馈，经常汇报" class="headerlink" title="过程中要及时反馈，经常汇报"></a>过程中要及时反馈，经常汇报</h3><p>工作中，我们要想领导之所想，老板把任务拆解好了，跟大伙制定了达成目标的关键路径，手下人去干活了，接下来老板会关注什么？显然，老板想知道各位干得如何了，是否遇到难点，出现意外，影响项目进展，已经做了哪些，还差哪些……所以，及时反馈，经常汇报是很有必要滴，老板会觉得你很上进，很积极。但老是拿个PPT去给老板讲，很不系统化，也不便于老板跟踪，一个良好的项目管理工具是很有必要的。</p>
-<h3 id="交流学习："><a href="#交流学习：" class="headerlink" title="交流学习："></a>交流学习：</h3><p>🐧  Linux shell_高级运维派: <code>459096184</code>    圈子 (系统运维-应用运维-自动化运维-虚拟化技术研究欢迎加入) <code> 群已满 添加微信群吧,添加我微信拉你进群</code></p>
-<p>🐧  BigData-Exchange School : <code>521621407</code>  圈子（大数据运维)（Hadoop开发人员)（大数据研究爱好者) 欢迎加入 相应Bidata有内部微信交流群互相学习，加入QQ群有链接。</p>
-<p>🐧  个人技术博客 : <code>http://blog.yancy.cc</code>  圈子 运维杂货铺 欢迎访问，全个人技术经验学习笔记。 （现在更新时间频率从1个月调整3月更新一次）</p>
-      </section>
-      <section class="extra">
-        
-          <ul class="copyright">
-  
-    <li><strong>本文作者：</strong>John Doe</li>
-    <li><strong>本文链接：</strong><a href="http://example.com/2018/02/12/%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA/index.html" title="http:&#x2F;&#x2F;example.com&#x2F;2018&#x2F;02&#x2F;12&#x2F;%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA&#x2F;index.html">http:&#x2F;&#x2F;example.com&#x2F;2018&#x2F;02&#x2F;12&#x2F;%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA&#x2F;index.html</a></li>
-    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
-  
-</ul>
-        
-        
-          <section class="donate">
-  <div id="qrcode-donate">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
-  </div>
-  <div class="icon">
-    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
-    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
-  </div>
-</section>
-        
-        
-  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operation-and-maintenance-Road/" rel="tag">Operation and maintenance Road</a></li></ul> 
-
-        
-  <nav class="nav">
-    <a href="/2018/08/02/%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C/"><i class="iconfont iconleft"></i>如何接手一个新业务的运维工作</a>
-    <a href="/2017/08/21/%E8%BF%90%E7%BB%B4%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%81%8C%E8%B4%A3%E5%92%8C%E5%89%8D%E6%99%AF/">运维工程师的职责和前景<i class="iconfont iconright"></i></a>
-  </nav>
-
-      </section>
-      
-    </section>
-  </div>
-</article></div>
-      <div class="col-xl-3">
-        
-          
-  <aside class="toc-wrap">
-    <h3 class="toc-title">文章目录：</h3>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9E%E6%B8%85%E6%A5%9A%E5%85%AC%E5%8F%B8%E4%B8%BA%E4%BB%80%E4%B9%88%E8%81%98%E8%AF%B7%E4%BD%A0"><span class="toc-text">搞清楚公司为什么聘请你</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E6%96%AD%E5%8D%87%E8%81%8C%E5%8A%A0%E8%96%AA%E7%9A%84%E7%A7%98%E8%AF%80"><span class="toc-text">不断升职加薪的秘诀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E6%8F%A1%E5%A5%BD%E8%B7%9F%E9%A2%86%E5%AF%BC%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">把握好跟领导的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E6%8F%A1%E5%A5%BD%E8%B7%9F%E5%90%8C%E4%BA%8B%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">把握好跟同事的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E6%96%AD%E6%8F%90%E5%8D%87%E8%87%AA%E8%BA%AB%E7%9A%84%E8%BD%AF%E7%B4%A0%E8%B4%A8"><span class="toc-text">不断提升自身的软素质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E9%81%93%E6%96%B9%E5%90%91%E4%BA%86%E8%A6%81%E4%BD%8E%E5%A4%B4%E7%9C%8B%E8%B7%AF"><span class="toc-text">知道方向了要低头看路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%B5%E5%BF%B5%E4%B8%8D%E5%BF%98%E5%BF%85%E6%9C%89%E5%9B%9E%E5%93%8D"><span class="toc-text">念念不忘必有回响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E4%B8%AD%E8%A6%81%E5%8F%8A%E6%97%B6%E5%8F%8D%E9%A6%88%EF%BC%8C%E7%BB%8F%E5%B8%B8%E6%B1%87%E6%8A%A5"><span class="toc-text">过程中要及时反馈，经常汇报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="toc-text">交流学习：</span></a></li></ol>
-  </aside>
-
-        
-      </div>
-    </div>
-  </div>
-</main>
-  
-
-<footer class="footer">
-  <div class="footer-social"><a 
-        href="tencent://message/?Menu=yes&uin=1165958741 "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color= '#12B7F5'" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  iconQQ "></i>
-      </a><a 
-        href="javascript:; "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color= '#09BB07'" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  iconwechat-fill "></i>
-      </a><a 
-        href="https://github.com/Yancyangyang "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color= '#9f7be1'" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  icongithub-fill "></i>
-      </a><a 
-        href="yancy.yangyang@outlook.com "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color=#FF3B00" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  iconmail"></i>
-      </a></div>
-  
-    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
-  
-</footer>
-  
-      <div class="fab fab-plus">
-    <i class="iconfont iconplus"></i>
-  </div>
-  
-  
-  
-  <div class="fab fab-up">
-    <i class="iconfont iconcaret-up"></i>
-  </div>
-  
-  
-  
-    
-<script src="/js/color-mode.js"></script>
-
-  
-  
-</body>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
-
-
-  
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
-
-
-
-
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-
-
-
-
-
-
-  
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-
-
-
-
-<script src="/js/utils.js"></script>
-<script src="/js/script.js"></script>
-
-
-
-
-
-
-
-  <script>
-    (function () {
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      } else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</html>
+extends widget/base
+block append head
+  link(rel='stylesheet', href= url_for('/style/post.css'))
+  link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))
+  link(rel='stylesheet', href= url_for('/style/common/jquery.fancybox.min.css'))
+  script(src= url_for("/js/highlight.pack.js"))
+  meta(name="description", content=truncate( strip_html(page.content), {length: 360, omission: '..'} ))
+  if theme.comment_valine && theme.comment_valine.enable
+      script(src="//unpkg.com/valine/dist/Valine.min.js")
+block topic
+    div#postTopic.is-full-height
+        - var title = truncate( page.title, {length: 65, omission: '..'} ) || ''
+        p.is-full-height.is-flex-shrink-0.is-flex.is-align-items-center.is-justify-content-center= title
+        p.is-full-height.is-flex-shrink-0.is-flex.is-align-items-center.is-justify-content-center= __('click_back_to_the_top')
+
+block content
+    - var tocContent = toc(page.content, {list_number: false})
+    main.container.is-max-widescreen.content.section.post-page.pt-4.px-4
+        .columns.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse
+            .column.is-3.is-hidden-mobile(class= tocContent.length < 1 && 'is-hidden')!= tocContent
+            .column.is-9
+                header.my-4
+                    if page.tags && page.tags.length > 0
+                        each tag in page.tags.toArray()
+                            a(href= url_for(`/tags/${tag.name}`))
+                                i.tag.post-item-tag= tag.name
+                h1.mt-0.mb-1.is-family-serif#postTitle= page.title
+                if page.date
+                    time.has-text-grey(datetime=page.date.toJSON())= date(page.date, date_format)
+                article.mt-2.post-content!= page.content
+                section.jump-container.is-flex.is-justify-content-space-between.my-6
+                    // em is empty placeholder
+                    if page.prev
+                        - var preContent= `${ __('prev') }: ${ page.prev.title }`
+                        a.button.is-default(href= url_for(page.prev.path) title= page.prev.title)
+                            i.iconfont.icon-prev.mr-2.has-text-grey
+                            span.has-text-weight-semibold= preContent
+                    else
+                        em
+                    if page.next
+                        - var nextContent= `${ __('next') }: ${ page.next.title }`
+                        a.button.is-default(href= url_for(page.next.path) title= page.next.title)
+                            span.has-text-weight-semibold= nextContent
+                            i.iconfont.icon-next.ml-2.has-text-grey
+                if theme.comment_utteranc && theme.comment_utteranc.enable
+                    article.mt-6.comment-container
+                        script(
+                            async
+                            repo= theme.comment_utteranc.repo
+                            src= "https://utteranc.es/client.js"
+                            label= theme.comment_utteranc.label
+                            issue-term= theme.comment_utteranc.issue_term || "pathname"
+                            theme= theme.comment_utteranc.theme || "preferred-color-scheme"
+                        )
+                if theme.comment_valine && theme.comment_valine.enable
+                    article.mt-6.comment-container#vcomments(
+                        data-comment_valine_id= theme.comment_valine.appId
+                        data-comment_valine_key= theme.comment_valine.appKey
+                    )
+                if theme.comment_disqus && theme.comment_disqus.enable
+                    div#disqus_thread
+                    article.mt-6.comment-container#disqus
+                        script="var disqus_config = function () {this.page.url = '"+theme.comment_disqus.url+url_for(page.path)+"';this.page.identifier = '"+theme.comment_disqus.name+"';};"
+                        script="(function() {var d = document, s = d.createElement('script');s.src = 'https://"+theme.comment_disqus.name+".disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();"
+                        script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
+block script
+    if theme.image_zoom && theme.image_zoom.enable
+        script(src= url_for("/js/jquery-3.6.1.min.js"))
+        script(src= url_for("/js/jquery-fancybox.min.js"))
+        script(src= url_for("/js/img_zoom.js"))
+    script(src= url_for("/js/post.js"))
