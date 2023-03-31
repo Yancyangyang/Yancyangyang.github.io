@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Yancy</title>
+  <icon>https://www.gravatar.com/avatar/f5df881e6b9e44b6e08f7631b579ce96</icon>
+  <subtitle>爱画画 | 爱看书 | 爱摄影 | 爱生活</subtitle>
+  <link href="http://chengyangyang.com/atom.xml" rel="self"/>
   
-  
-  <link href="http://example.com/atom.xml" rel="self"/>
-  
-  <link href="http://example.com/"/>
+  <link href="http://chengyangyang.com/"/>
   <updated>2023-03-31T16:26:48.187Z</updated>
-  <id>http://example.com/</id>
+  <id>http://chengyangyang.com/</id>
   
   <author>
-    <name>John Doe</name>
-    
+    <name>Yancy</name>
+    <email>Yancyango@gmail.com</email>
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
     <title>90后年轻人第一套房，怎么买？</title>
-    <link href="http://example.com/2019/11/17/90%E5%90%8E%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%AC%AC%E4%B8%80%E5%A5%97%E6%88%BF%EF%BC%8C%E6%80%8E%E4%B9%88%E4%B9%B0%EF%BC%9F/"/>
-    <id>http://example.com/2019/11/17/90%E5%90%8E%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%AC%AC%E4%B8%80%E5%A5%97%E6%88%BF%EF%BC%8C%E6%80%8E%E4%B9%88%E4%B9%B0%EF%BC%9F/</id>
+    <link href="http://chengyangyang.com/2019/11/17/90%E5%90%8E%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%AC%AC%E4%B8%80%E5%A5%97%E6%88%BF%EF%BC%8C%E6%80%8E%E4%B9%88%E4%B9%B0%EF%BC%9F/"/>
+    <id>http://chengyangyang.com/2019/11/17/90%E5%90%8E%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%AC%AC%E4%B8%80%E5%A5%97%E6%88%BF%EF%BC%8C%E6%80%8E%E4%B9%88%E4%B9%B0%EF%BC%9F/</id>
     <published>2019-11-17T09:18:06.000Z</published>
     <updated>2023-03-31T16:26:48.187Z</updated>
     
@@ -31,14 +31,14 @@
     
     
     
-    <category term="Financing" scheme="http://example.com/tags/Financing/"/>
+    <category term="Financing" scheme="http://chengyangyang.com/tags/Financing/"/>
     
   </entry>
   
   <entry>
     <title>转型技术管理后，应该避踩哪些坑？</title>
-    <link href="http://example.com/2018/09/15/%20%E8%BD%AC%E5%9E%8B%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%90%8E%EF%BC%8C%E5%BA%94%E8%AF%A5%E9%81%BF%E8%B8%A9%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F/"/>
-    <id>http://example.com/2018/09/15/%20%E8%BD%AC%E5%9E%8B%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%90%8E%EF%BC%8C%E5%BA%94%E8%AF%A5%E9%81%BF%E8%B8%A9%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F/</id>
+    <link href="http://chengyangyang.com/2018/09/15/%20%E8%BD%AC%E5%9E%8B%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%90%8E%EF%BC%8C%E5%BA%94%E8%AF%A5%E9%81%BF%E8%B8%A9%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F/"/>
+    <id>http://chengyangyang.com/2018/09/15/%20%E8%BD%AC%E5%9E%8B%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%90%8E%EF%BC%8C%E5%BA%94%E8%AF%A5%E9%81%BF%E8%B8%A9%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F/</id>
     <published>2018-09-15T03:33:17.000Z</published>
     <updated>2023-03-31T16:26:57.496Z</updated>
     
@@ -49,17 +49,17 @@
     
     
     
-    <category term="Practice" scheme="http://example.com/categories/Practice/"/>
+    <category term="Practice" scheme="http://chengyangyang.com/categories/Practice/"/>
     
     
-    <category term="Operation and maintenance Road" scheme="http://example.com/tags/Operation-and-maintenance-Road/"/>
+    <category term="Operation and maintenance Road" scheme="http://chengyangyang.com/tags/Operation-and-maintenance-Road/"/>
     
   </entry>
   
   <entry>
     <title>如何接手一个新业务的运维工作</title>
-    <link href="http://example.com/2018/08/02/%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C/"/>
-    <id>http://example.com/2018/08/02/%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C/</id>
+    <link href="http://chengyangyang.com/2018/08/02/%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C/"/>
+    <id>http://chengyangyang.com/2018/08/02/%E5%A6%82%E4%BD%95%E6%8E%A5%E6%89%8B%E4%B8%80%E4%B8%AA%E6%96%B0%E4%B8%9A%E5%8A%A1%E7%9A%84%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C/</id>
     <published>2018-08-02T03:33:17.000Z</published>
     <updated>2023-03-31T16:27:53.166Z</updated>
     
@@ -70,17 +70,17 @@
     
     
     
-    <category term="Practice" scheme="http://example.com/categories/Practice/"/>
+    <category term="Practice" scheme="http://chengyangyang.com/categories/Practice/"/>
     
     
-    <category term="Operation and maintenance Road" scheme="http://example.com/tags/Operation-and-maintenance-Road/"/>
+    <category term="Operation and maintenance Road" scheme="http://chengyangyang.com/tags/Operation-and-maintenance-Road/"/>
     
   </entry>
   
   <entry>
     <title>做一个职业的运维人</title>
-    <link href="http://example.com/2018/02/12/%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA/"/>
-    <id>http://example.com/2018/02/12/%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA/</id>
+    <link href="http://chengyangyang.com/2018/02/12/%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA/"/>
+    <id>http://chengyangyang.com/2018/02/12/%20%E5%81%9A%E4%B8%80%E4%B8%AA%E8%81%8C%E4%B8%9A%E7%9A%84%E8%BF%90%E7%BB%B4%E4%BA%BA/</id>
     <published>2018-02-12T03:33:17.000Z</published>
     <updated>2023-03-31T16:25:34.114Z</updated>
     
@@ -91,17 +91,17 @@
     
     
     
-    <category term="Practice" scheme="http://example.com/categories/Practice/"/>
+    <category term="Practice" scheme="http://chengyangyang.com/categories/Practice/"/>
     
     
-    <category term="Operation and maintenance Road" scheme="http://example.com/tags/Operation-and-maintenance-Road/"/>
+    <category term="Operation and maintenance Road" scheme="http://chengyangyang.com/tags/Operation-and-maintenance-Road/"/>
     
   </entry>
   
   <entry>
     <title>运维工程师的职责和前景</title>
-    <link href="http://example.com/2017/08/21/%E8%BF%90%E7%BB%B4%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%81%8C%E8%B4%A3%E5%92%8C%E5%89%8D%E6%99%AF/"/>
-    <id>http://example.com/2017/08/21/%E8%BF%90%E7%BB%B4%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%81%8C%E8%B4%A3%E5%92%8C%E5%89%8D%E6%99%AF/</id>
+    <link href="http://chengyangyang.com/2017/08/21/%E8%BF%90%E7%BB%B4%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%81%8C%E8%B4%A3%E5%92%8C%E5%89%8D%E6%99%AF/"/>
+    <id>http://chengyangyang.com/2017/08/21/%E8%BF%90%E7%BB%B4%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%81%8C%E8%B4%A3%E5%92%8C%E5%89%8D%E6%99%AF/</id>
     <published>2017-08-21T02:55:59.000Z</published>
     <updated>2019-01-21T13:38:14.000Z</updated>
     
@@ -112,17 +112,17 @@
     
     
     
-    <category term="简历技巧" scheme="http://example.com/categories/%E7%AE%80%E5%8E%86%E6%8A%80%E5%B7%A7/"/>
+    <category term="简历技巧" scheme="http://chengyangyang.com/categories/%E7%AE%80%E5%8E%86%E6%8A%80%E5%B7%A7/"/>
     
     
-    <category term="Operation and maintenance Road" scheme="http://example.com/tags/Operation-and-maintenance-Road/"/>
+    <category term="Operation and maintenance Road" scheme="http://chengyangyang.com/tags/Operation-and-maintenance-Road/"/>
     
   </entry>
   
   <entry>
     <title>如何写好简历，技术管理如何招聘？</title>
-    <link href="http://example.com/2017/06/12/%20%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E7%AE%80%E5%8E%86%EF%BC%8C%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%A6%82%E4%BD%95%E6%8B%9B%E8%81%98%EF%BC%9F/"/>
-    <id>http://example.com/2017/06/12/%20%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E7%AE%80%E5%8E%86%EF%BC%8C%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%A6%82%E4%BD%95%E6%8B%9B%E8%81%98%EF%BC%9F/</id>
+    <link href="http://chengyangyang.com/2017/06/12/%20%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E7%AE%80%E5%8E%86%EF%BC%8C%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%A6%82%E4%BD%95%E6%8B%9B%E8%81%98%EF%BC%9F/"/>
+    <id>http://chengyangyang.com/2017/06/12/%20%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E7%AE%80%E5%8E%86%EF%BC%8C%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%A6%82%E4%BD%95%E6%8B%9B%E8%81%98%EF%BC%9F/</id>
     <published>2017-06-12T03:33:17.000Z</published>
     <updated>2023-03-31T16:30:25.058Z</updated>
     
@@ -133,17 +133,17 @@
     
     
     
-    <category term="Practice" scheme="http://example.com/categories/Practice/"/>
+    <category term="Practice" scheme="http://chengyangyang.com/categories/Practice/"/>
     
     
-    <category term="Operation and maintenance Road" scheme="http://example.com/tags/Operation-and-maintenance-Road/"/>
+    <category term="Operation and maintenance Road" scheme="http://chengyangyang.com/tags/Operation-and-maintenance-Road/"/>
     
   </entry>
   
   <entry>
     <title>面试技巧如何修炼哪些，成为面试主角!</title>
-    <link href="http://example.com/2017/04/12/%E9%9D%A2%E8%AF%95%E6%8A%80%E5%B7%A7%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E5%93%AA%E4%BA%9B%EF%BC%8C%E6%88%90%E4%B8%BA%E9%9D%A2%E8%AF%95%E4%B8%BB%E8%A7%92/"/>
-    <id>http://example.com/2017/04/12/%E9%9D%A2%E8%AF%95%E6%8A%80%E5%B7%A7%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E5%93%AA%E4%BA%9B%EF%BC%8C%E6%88%90%E4%B8%BA%E9%9D%A2%E8%AF%95%E4%B8%BB%E8%A7%92/</id>
+    <link href="http://chengyangyang.com/2017/04/12/%E9%9D%A2%E8%AF%95%E6%8A%80%E5%B7%A7%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E5%93%AA%E4%BA%9B%EF%BC%8C%E6%88%90%E4%B8%BA%E9%9D%A2%E8%AF%95%E4%B8%BB%E8%A7%92/"/>
+    <id>http://chengyangyang.com/2017/04/12/%E9%9D%A2%E8%AF%95%E6%8A%80%E5%B7%A7%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E5%93%AA%E4%BA%9B%EF%BC%8C%E6%88%90%E4%B8%BA%E9%9D%A2%E8%AF%95%E4%B8%BB%E8%A7%92/</id>
     <published>2017-04-12T03:33:17.000Z</published>
     <updated>2023-02-12T01:27:17.609Z</updated>
     
@@ -157,10 +157,10 @@
     
     
     
-    <category term="Practice" scheme="http://example.com/categories/Practice/"/>
+    <category term="Practice" scheme="http://chengyangyang.com/categories/Practice/"/>
     
     
-    <category term="Operation and maintenance Road" scheme="http://example.com/tags/Operation-and-maintenance-Road/"/>
+    <category term="Operation and maintenance Road" scheme="http://chengyangyang.com/tags/Operation-and-maintenance-Road/"/>
     
   </entry>
   
