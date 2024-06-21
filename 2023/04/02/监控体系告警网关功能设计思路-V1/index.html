@@ -1,0 +1,74 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>监控体系告警网关功能设计思路-V1</title><meta name="description" content="Personal blog, thinking and sharing of technology and life"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="
+
+
+
+
+
+
+基本概念告警网关以应用为维度，提供告警发送、限流、升级等功能。
+告警的一些基本字段有：
+
+app: 发生告警的应用，对应cmdb中应用名
+name：告警名。由各个项目组自己定义，对告警类型的简要描述
+labels: 项目组自定义的一串标签key value
+env: 发送告警的环境。
+recovery：默认为false。如果设置成true，表示这是一条告警恢复通知
+
+告警网关会根据app字段，从cmdb中获取应用负责人和运维，将应用负责人和运维自动加到告警接收人里面
+告警限流为了防止告警发送频率过高，导致接收人员来不及查看，或者漏看重要告警，因此对具有同一特征的告警进行流控。
+
+特征的计算方式是将app, name, label, recovery等字段进行排序拼接，然后计算这些属性的hash.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Yancy" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Yangyang.Cheng's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">监控体系告警网关功能设计思路-V1</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%8A%E8%AD%A6%E9%99%90%E6%B5%81"><span class="toc-text">告警限流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%8A%E8%AD%A6%E5%8F%91%E9%80%81"><span class="toc-text">告警发送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E8%AF%9D%E5%91%8A%E8%AD%A6"><span class="toc-text">电话告警</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8C%89%E7%85%A7%E7%94%B5%E8%AF%9D%E5%91%8A%E8%AD%A6%E7%BB%84%E9%80%9A%E7%9F%A5"><span class="toc-text">1. 按照电话告警组通知</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%8C%89%E6%8E%A5%E6%94%B6%E7%94%A8%E6%88%B7%E9%80%90%E4%B8%AA%E5%8F%91%E9%80%81"><span class="toc-text">2. 按接收用户逐个发送</span></a></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Operation%20and%20maintenance%20Road"><i class="tag post-item-tag">Operation and maintenance Road</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">监控体系告警网关功能设计思路-V1</h1><time class="has-text-grey" datetime="2023-04-02T15:33:17.000Z">2023-04-02</time><article class="mt-2 post-content"><p><img src="https://haojen.github.io/Claudia-theme-blog/images/lake.png"></p>
+<span id="more"></span>
+
+
+
+
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>告警网关以应用为维度，提供告警发送、限流、升级等功能。</p>
+<p>告警的一些基本字段有：</p>
+<ol>
+<li>app: 发生告警的应用，对应cmdb中应用名</li>
+<li>name：告警名。由各个项目组自己定义，对告警类型的简要描述</li>
+<li>labels: 项目组自定义的一串标签key value</li>
+<li>env: 发送告警的环境。</li>
+<li>recovery：默认为false。如果设置成true，表示这是一条告警恢复通知</li>
+</ol>
+<p>告警网关会根据app字段，从cmdb中获取应用负责人和运维，将应用负责人和运维自动加到告警接收人里面</p>
+<h2 id="告警限流"><a href="#告警限流" class="headerlink" title="告警限流"></a>告警限流</h2><p>为了防止告警发送频率过高，导致接收人员来不及查看，或者漏看重要告警，因此对具有同一特征的告警进行流控。</p>
+<ol>
+<li>特征的计算方式是将app, name, label, recovery等字段进行排序拼接，然后计算这些属性的hash值。同一个hash值被认为是同一个告警。</li>
+<li>默认流控时间是20分钟（即20分钟内同一个告警只发送一次）</li>
+<li>项目组可以针对不同应用、告警名在<a target="_blank" rel="noopener" href="http://devops-alarm.langgemap/policy">告警策略 - DevOps Alarm</a> 页面修改流控时间。</li>
+</ol>
+<h2 id="告警发送"><a href="#告警发送" class="headerlink" title="告警发送"></a>告警发送</h2><p>目前告警发送支持企业微信、电话等方式发送. 再发送电话的时候，强烈推荐同时通过webhook或者chatId方式发送。电话当做紧急提醒用，而webhook或者chatId作为查看详细内容用。</p>
+<p>企业微信：</p>
+<ol>
+<li>支持直接发送给个人（朗歌企业微信）。多个接收人员用逗号隔开</li>
+<li>支持发送给群组（朗歌企业微信），可通过<a target="_blank" rel="noopener" href="http://devops-alarm.langgemap/group/chatlist">微信告警组 - DevOps Alarm</a>查看群组id</li>
+<li>支持webhook方式发送</li>
+</ol>
+<p>下面例子将同时发送给个人(sendUsers), 告警组(chatId)和webhook</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl --location --request POST <span class="string">&#x27;http://devops-alarm.geely.com/devopsalarm/api/v1/alarms/alarm&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">--data-raw <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;app&quot;: &quot;devops-ldap&quot;,</span></span><br><span class="line"><span class="string">  &quot;name&quot;: &quot;test send&quot;,</span></span><br><span class="line"><span class="string">  &quot;ip&quot;: &quot;172.16.220.30&quot;,</span></span><br><span class="line"><span class="string">  &quot;message&quot;: &quot;测试新的告警组&quot;,</span></span><br><span class="line"><span class="string">  &quot;sendUsers&quot;: &quot;Huijun.Xu@geely.com,Yangyang.Cheng1@geely.com&quot;,</span></span><br><span class="line"><span class="string">  &quot;chatId&quot;: &quot;wr17T_CgAAkOXUzNqdaP-QIt3pIIuJkA&quot;,</span></span><br><span class="line"><span class="string">  &quot;webhook&quot;: &quot;01c22bb3-6b8f-4acb-8969-xxxxdb3911524&quot;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="电话告警"><a href="#电话告警" class="headerlink" title="电话告警"></a>电话告警</h2><p>电话告警需提前申请，需要运维将接收号码加到白名单中。</p>
+<p>在同一条电话告警中，任意一个人接通后，该条电话告警被认为已经发送成功，不再重复发送。如果所有人均未接通，那每个人最多拨打两次，每次拨打时间间隔2分钟。</p>
+<p>电话告警有两种通知方式</p>
+<h4 id="1-按照电话告警组通知"><a href="#1-按照电话告警组通知" class="headerlink" title="1. 按照电话告警组通知"></a>1. 按照电话告警组通知</h4><p>指同时给电话告警组内所有人员发送电话告警。电话告警组可通过<a target="_blank" rel="noopener" href="http://devops-alarm.langgemap/group/applist">电话告警组 - DevOps Alarm</a>查看。</p>
+<p>比如电话告警组4包含4个用户，在收到告警后，将同时给这四个用户拨打电话.</p>
+<p>例：下面是通过电话告警组发送的方式（设置了voiceAppId和sendType&#x3D;8)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">curl --location --request POST <span class="string">&#x27;http://devops-alarm.geely.com/devopsalarm/api/v1/alarms/alarm&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">--data-raw <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;app&quot;: &quot;devops-ldap&quot;,</span></span><br><span class="line"><span class="string">  &quot;name&quot;: &quot;test send&quot;,</span></span><br><span class="line"><span class="string">  &quot;ip&quot;: &quot;172.16.220.30&quot;,</span></span><br><span class="line"><span class="string">  &quot;message&quot;: &quot;测试新的告警组&quot;,</span></span><br><span class="line"><span class="string">  &quot;voiceAppId&quot;: 12345</span></span><br><span class="line"><span class="string">  &quot;chatId&quot;: &quot;wr17T_CgAAkOXUzNqdaP-QIt3pIIuJkA&quot;,</span></span><br><span class="line"><span class="string">  &quot;webhook&quot;: &quot;01c22bb3-6b8f-4acb-8969-xxxxdb3911524&quot;,</span></span><br><span class="line"><span class="string">  &quot;sendType&quot;: 8</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-按接收用户逐个发送"><a href="#2-按接收用户逐个发送" class="headerlink" title="2. 按接收用户逐个发送"></a>2. 按接收用户逐个发送</h4><p>按接收用户逐个发送，当用户未接通，告警网关间隔时间为2分钟向后续用户发送，直到有用户接听。</p>
+<p>比如告警接收用户指定了4个人,(sendUsers: zhangsan,lisi,wangwu,zhaoliu)。当收到电话告警后</p>
+<ol>
+<li>告警网关首先给zhangsan拨打电话</li>
+<li>2分钟，检测zhangsan是否接听。如果未接听，同时给zhangshan, lisi拨打电话</li>
+<li>再过2分钟，检测zhansan, lisi是否接听。如果均未接听，则给 lisi, wangwu拨打 （此时zhangsan已经达到最大拨打次数，不再给zhangsan拨打）</li>
+<li>以2分钟为间隔，依次检测是否有人接听，或者直到给zhaoliu也拨打完两次电话。</li>
+<li>在这个过程中，任意一人接听电话，则不再拨打后续人员</li>
+</ol>
+<p>推荐使用这种方式进行电话告警，可以有效防止骚扰现象</p>
+<p>例: 下面按照逐个发送方式的例子（设置了sendUsers和sendType&#x3D;8)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">curl --location --request POST <span class="string">&#x27;http://devops-alarm.langgemap/devopsalarm/api/v1/alarms/alarm&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">--data-raw <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;app&quot;: &quot;devops-ldap&quot;,</span></span><br><span class="line"><span class="string">  &quot;name&quot;: &quot;test send&quot;,</span></span><br><span class="line"><span class="string">  &quot;ip&quot;: &quot;172.16.220.30&quot;,</span></span><br><span class="line"><span class="string">  &quot;message&quot;: &quot;测试新的告警组&quot;,</span></span><br><span class="line"><span class="string">  &quot;sendUsers&quot;: &quot;Huijun.Xu@geely.com,Yangyang.Cheng1@geely.com&quot;,</span></span><br><span class="line"><span class="string">  &quot;chatId&quot;: &quot;wr17T_CgAAkOXUzNqdaP-QIt3pIIuJkA&quot;,</span></span><br><span class="line"><span class="string">  &quot;webhook&quot;: &quot;01c22bb3-6b8f-4acb-8969-230db3911524&quot;,</span></span><br><span class="line"><span class="string">  &quot;sendType&quot;: 8</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2022/01/09/%E8%BF%90%E7%BB%B4%E4%BA%BA%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E5%8D%9C%E9%81%93%E5%B8%88%E6%8C%87%E5%8D%97/" title="运维leader卜道师指南-总结经验"><span class="has-text-weight-semibold">Next: 运维leader卜道师指南-总结经验</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="Haojen/Claudia-theme-blog" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com//"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/Yancyangyang"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> Yangyang.Cheng 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/Yancyangyang">Theme by Yancyangyang&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
